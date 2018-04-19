@@ -1,0 +1,19 @@
+version: '2'
+
+services: 
+  robotshop:
+    build:
+      context: robotshop
+      dockerfile: Dockerfile
+    image: robotshop
+    restart: always
+    ports: 
+    - 84:80
+
+  shoxxbot:
+    build:
+      context: shoxx-bot
+      dockerfile: Dockerfile
+    image: shoxxbot
+    volumes: 
+    - /etc/localtime:/etc/localtime:ro

@@ -1,0 +1,188 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.Extensions.Options
+@inject SignInManager<CFlixUser> SignInManager
+@inject UserManager<CFlixUser> UserManager
+@inject IOptions<CFlixConfiguration> Configuration
+
+@{ var user = SignInManager.IsSignedIn(User) ? await UserManager.GetUserAsync(User) : null; }
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CFlix</title>
+
+    <environment names="Development">
+        <link rel="stylesheet" href="~/lib/semantic/dist/semantic.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css"
+              asp-fallback-href="~/lib/semantic/dist/semantic.min.css"
+              asp-fallback-test-class="transition" asp-fallback-test-property="animation-iteration-count" asp-fallback-test-value="1" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
+
+    <environment names="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/semantic/dist/semantic.js"></script>
+        <script src="~/lib/moment/min/moment-with-locales.js"></script>
+        <script src="~/lib/smooch/dist/smooch.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.2.1.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous">
+            @*integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk"*@
+        </script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"
+                asp-fallback-src="~/lib/semantic/dist/js/semantic.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.site"
+                crossorigin="anonymous">
+            @*integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk" *@
+        </script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment-with-locales.min.js"
+                asp-fallback-src="~/lib/moment/min/moment-with-locales.min.js"
+                asp-fallback-test="moment"
+                crossorigin="anonymous">
+        </script>
+
+        <script src="https://cdn.smooch.io/smooch.min.js"
+                asp-fallback-src="~/lib/smooch/dist/smooch.js"
+                asp-fallback-test="typeof Smooch !== 'undefined'"
+                crossorigin="anonymous">
+        </script>
+
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+
+        <script>
+            (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+            ga('create', 'UA-99835894-1', 'auto');
+            @Html.Raw(user != null? $"ga('set', 'userId', '{user.Id}');" : "")
+            @Html.Raw(user != null? $"ga('set', 'dimension1', '{user.Id}');" : "")
+            ga('send', 'pageview');
+
+        </script>
+    </environment>
+
+</head>
+<body class="pushable">
+
+    <nav class="ui large secondary inverted pointing menu">
+        <a class="toc item">
+            <i class="sidebar icon"></i>
+        </a>
+        <active-tab asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/logo/logo-light.svg" alt="CFlix" /></active-tab>
+        @*<active-tab asp-area="" asp-controller="Home" asp-action="Index">CFlix</active-tab>*@
+        @if (Configuration.Value.Stage >= 3)
+        {
+            @*<active-tab asp-area="" asp-controller="Subscription" asp-action="Index">Subscribe</active-tab>*@
+        }
+        <active-tab asp-area="" asp-controller="Achievement" asp-action="Index">Easter Eggs</active-tab>
+        <active-tab asp-area="" asp-controller="Rules" asp-action="Index">Règlement</active-tab>
+
+        @if (user != null)
+        {
+            <a id="user-display-name" class="right item">@user.DisplayName</a>
+            <div class="ui teal flowing popup bottom right transition hidden">
+                <div class="ui one column divided center aligned grid">
+                    <div class="column">
+                        @if (Configuration.Value.Stage >= 2)
+                        {
+                            <p><a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-profileName="me" class="ui sub">Profil</a></p>
+                        }
+                        <a class="ui labeled icon red button" asp-area="" asp-controller="Account" asp-action="LogOut">
+                            <i class="log out icon"></i>
+                            Se déconnecter
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </nav>
+
+    <nav class="ui vertical inverted sidebar menu">
+        <active-tab asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/logo/logo-light.svg" alt="CFlix" /></active-tab>
+        @*<active-tab asp-area="" asp-controller="Home" asp-action="Index">CFlix</active-tab>*@
+        @if (Configuration.Value.Stage >= 3)
+        {
+            @*<active-tab asp-area="" asp-controller="Subscription" asp-action="Index">Subscribe</active-tab>*@
+        }
+        <active-tab asp-area="" asp-controller="Achievement" asp-action="Index">Easter Eggs</active-tab>
+        <active-tab asp-area="" asp-controller="Rules" asp-action="Index">Règlement</active-tab>
+    </nav>
+
+    <div class="pusher">
+        <div class="ui vertical aligned segment">
+
+            <div class="ui @((bool?)ViewData["de-container"] == true ? "" : "container")">
+                @RenderBody()
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="ui inverted vertical footer segment">
+        @*<div class="ui center aligned container">
+                <img src="~/images/logo/logo-white.svg" class="ui centered small image">
+                <div class="ui horizontal inverted small divided link list">
+                    <a class="item" href="#">Site Map</a>
+                    <a class="item" href="#">Contact Us</a>
+                    <a class="item" href="#">Terms and Conditions</a>
+                    <a class="item" href="#">Privacy Policy</a>
+                </div>
+            </div>*@
+        <div class="ui middle aligned four column centered grid stackable">
+            <div class="column right aligned">
+                <div class="ui inverted small link list">
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="item">Accueil</a>
+                    @if (Configuration.Value.Stage >= 3)
+                    {
+                        @*<active-tab asp-area="" asp-controller="Subscription" asp-action="Index">Subscribe</active-tab>*@
+                    }
+                    <a asp-area="" asp-controller="Achievement" asp-action="Index" class="item">Easter Eggs</a>
+                    <a asp-area="" asp-controller="Rules" asp-action="Index" class="item">Règlement</a>
+                </div>
+            </div>
+            <div class="two wide column center aligned">
+                <img src="~/images/logo/logo-white.svg" class="ui small image">
+            </div>
+            <div class="column left aligned">
+                <img src="~/images/logo/slogan-white.svg" alt="Vous êtes plus addict que vous ne le pensez" class="ui image" />
+            </div>
+        </div>
+    </footer>
+
+    @RenderSection("Scripts", required: false)
+
+    @if (user != null)
+    {
+        <script>
+            Smooch.init({
+                appToken: 'agvx3ltg2rtmjd12jd5alnjn8',
+                customText: {
+                    headerText: 'CFlix help team',
+                    inputPlaceholder: 'Tapez votre question...',
+                    sendButtonText: 'Envoyez',
+                    introductionText: 'Vous êtes sûr d\'avoir bien cherché ou qu\'il y a un bug "anormal", vous pouvez contacter le support de CFlix ici même.\r\nPS: n\'essayez pas, il n\'y a aucune épreuve ici :P'
+                },
+                givenName: '@user.DisplayName',
+                surname: 'need some help',
+                soundNotificationEnabled: true
+            });
+        </script>
+    }
+
+</body>
+</html>

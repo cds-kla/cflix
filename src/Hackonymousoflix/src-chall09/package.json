@@ -1,0 +1,17 @@
+{
+  "name": "cookie-receiver",
+  "version": "1.0.0",
+  "description": "Hackonymousoflix",
+  "main": "server.js",
+  "author": "Hackonymousoflix",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "morgan": "^1.8.2",
+    "node-serialize": "0.0.4"
+  },
+  "devDependencies": {}
+}

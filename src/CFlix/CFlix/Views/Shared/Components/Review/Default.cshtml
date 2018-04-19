@@ -1,0 +1,59 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model CFlix.Models.ViewModels.ReviewViewModel
+@inject UserManager<CFlixUser> UserManager
+
+<div id="reviewSection" class="ui">
+    <h3 class="ui horizontal divider header">
+        <i class="comments outline icon"></i>
+        Commentaires
+    </h3>
+
+    <div id="reviewForm">
+        <form asp-route="Post_Review" method="post" class="ui inverted form">
+            @*<input type="hidden" asp-for="MediaId" />*@
+            <div class="disabled field">
+                <textarea asp-for="Content"></textarea>
+            </div>
+            <button type="submit" class="ui fluid red labeled submit icon disabled button">
+                <i class="icon edit"></i> Ajouter un commentaire
+            </button>
+        </form>
+    </div>
+
+    <div id="reviews" class="ui comments">
+        @foreach (var review in (List<Review>)ViewBag.Reviews)
+        {
+            <div class="comment">
+                <a class="avatar">
+                    <img src="/images/avatar/@(review.User.AvatarType.ToString()).svg">
+                </a>
+                <div class="content">
+                    <a class="author" asp-area="" asp-controller="Profile" asp-action="Index" asp-route-profileName="@review.UserName">@review.User.DisplayName</a>
+                    <div class="metadata">
+                        <span class="date" data-comment-date="@DateTime.SpecifyKind(review.LastUpdated, DateTimeKind.Utc).ToString("o")"></span>
+                    </div>
+                    @if (review.IsHidden)
+                    {
+                        <div class="ui ignored info message">Ce commentaire a été masqué</div>
+                    }
+                    else
+                    {
+                        <div class="text">@Html.Raw(review.Content)</div>
+                    }
+                    <div class="actions">
+                        @if (review.UserName == User.Identity.Name)
+                        {
+                            <a class="hide" asp-controller="Review" asp-action="ToggleHide" asp-route-reviewId="@review.Id" asp-route-isHidden="@review.IsHidden">
+                                <i class="@(review.IsHidden? "unhide" : "hide") icon"></i>
+                                @(review.IsHidden ? "Démasquer" : "Masquer")
+                            </a>
+                        }
+
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>

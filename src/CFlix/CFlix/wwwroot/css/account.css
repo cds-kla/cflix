@@ -1,0 +1,16 @@
+body {
+    background-color: #1F3244;
+}
+
+    body > .grid {
+        height: 100%;
+    }
+
+.image {
+    margin-top: -100px;
+}
+
+.ui.grid > .column:not(.row) {
+    width: inherit;
+    max-width: 300px;
+}

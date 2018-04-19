@@ -1,0 +1,38 @@
+﻿@using CFlix.Extensions
+@model IEnumerable<NewsRelease>
+
+<div class="ui info icon message">
+    <i class="info circle icon"></i>
+    <div class="content">
+        <div class="header">
+            Hub d'information
+        </div>
+        <p>Dans ce panel vous serez informé des dernières nouveautés concernant CFlix</p>
+    </div>
+</div>
+
+<div class="ui message">
+    <div class="content">
+        <div class="header">
+            Les couleurs des messages
+        </div>
+        <p>Ceux en <b>vert</b> sont des administrateurs CFlix</p>
+        <p>Ceux en <b>violet</b> sont d'hackonymousoflix</p>
+        <p>Ceux en <b>noir</b> sont de l'équipe sécurité</p>
+    </div>
+</div>
+
+@foreach (var news in Model)
+{
+    <div class="ui @news.NewsReleaseType.ToCSSType() icon message">
+        <i class="@news.NewsReleaseType.ToCSSIcon() icon"></i>
+        <div class="content">
+            <div class="header">
+                @news.UserName
+            </div>
+            <span class="newsreleasedate date" data-news-release-date="@DateTime.SpecifyKind(news.CreationDate.DateTime, DateTimeKind.Utc).ToString("o")">
+            </span>
+            <p>@Html.Raw(news.Content)</p>
+        </div>
+    </div>
+}

@@ -1,0 +1,78 @@
+﻿@model ProfileStatViewModel
+
+@{
+    ViewData["Title"] = Model.DisplayName;
+}
+
+<div class="ui segment">
+    <div class="ui center aligned grid">
+        <div class="four wide column">
+            <div id="profileSection" class="ui content">
+                <div class="ui small image">
+                    <img id="@nameof(Model.AvatarType)" src="/images/avatar/@(Model.AvatarType.ToString()).svg">
+                </div>
+
+                <div class="ui content description">
+                    <h3 id="@nameof(Model.DisplayName)" class="ui header">@Model.DisplayName</h3>
+                    <label asp-for="AccountType"></label>
+                    <span id="@nameof(Model.AccountType)"> : <b>@Model.AccountType.ToString()</b></span>
+                    @if (Model.AccountType == AccountType.Alpha && Model.IsEditable)
+                    {
+                        <p>Merci de nous aidé en participant à la alpha !</p>
+                        <p>Pour vous remercier : <br /><b>CFl1X-41pH@@_B37@@_g4mM@@</b></p>
+                    }
+                </div>
+
+                @if (Model.IsEditable)
+                {
+                    <div class="actions">
+                        <a class="ui red left labeled icon button" asp-area="" asp-controller="Profile" asp-action="Edit">
+                            <i class="edit icon"></i>
+                            Modifier son profil
+                        </a>
+                    </div>
+                }
+            </div>
+
+            <div class="ui statistic">
+                <div class="value">
+                    @Model.UnlockedAchivements / @Model.AchievementCount
+                </div>
+                <div class="label">
+                    Easter Egg trouvés
+                </div>
+            </div>
+        </div>
+
+        <div class="twelve wide column">
+            <div class="ui sub header">Easter egg trouvés par l'utilisateur</div>
+
+            <table class="ui very basic collapsing celled table">
+                <tbody>
+                    @foreach (var pair in Model.UserEasterEggs)
+                    {
+                        <tr class="@(pair.Value != null? "positive": "")">
+                            <td class="center aligned">
+                                @if (pair.Value != null)
+                                {
+                                    <i class="large green checkmark icon"></i>
+                                }
+                            </td>
+                            <td>
+                                <h4 class="ui image header">
+                                    <img src="/images/easteregg/@(pair.Key.Hash).svg" alt="@pair.Key.Title" class="ui mini rounded image">
+                                    <div class="content">
+                                        @pair.Key.Title
+                                        <div class="sub header">
+                                            @pair.Key.Description
+                                        </div>
+                                    </div>
+                                </h4>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

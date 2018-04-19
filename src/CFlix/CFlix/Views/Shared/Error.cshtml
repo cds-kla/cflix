@@ -1,0 +1,61 @@
+﻿@model int
+
+@{
+    ViewData["Title"] = "Error";
+}
+
+<div id="error">
+
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <div class="ui center aligned centered grid">
+        <img src="~/images/logo/logo-light.svg" alt="CFlix" />
+    </div>
+
+    <div class="ui four column stackable centered grid">
+        <br/>
+        <div class="ui inverted circular segment">
+            <div class="ui huge red statistic">
+                <div class="label">
+                    Erreur
+                </div>
+                <div class="value">
+                    @if (Model == 200)
+                    {
+                    <i class="diamond icon"></i> @Model
+                    }
+                    else
+                    {
+                    <i class="bug icon"></i> @Model
+                    }
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+
+
+    <div class="ui center aligned centered grid">
+        <div class="twelve wide column center aligned"> 
+            @if (Model >= 500)
+            {
+                <h2>Il semblerait qu'une erreur soit survenue de notre côté ! :o</h2>
+            }
+            else if (Model == 200)
+            {
+                <h2>Hey ! Bien tenté mais il n'y a rien à voir ici ;)</h2>
+            }
+            else
+            {
+                <h2>Hum, est-ce vraiment nous qui sommes en tort, ou vous essayez d'accéder à quelque chose que vous ne devriez pas ???</h2>
+            }
+        </div>
+    </div>
+
+    <div class="ui center aligned centered grid">
+        <img src="~/images/logo/slogan.svg" alt="Vous êtes plus addict que vous ne le croyez" />
+    </div>
+</div>

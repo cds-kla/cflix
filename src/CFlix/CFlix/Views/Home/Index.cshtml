@@ -1,0 +1,61 @@
+﻿@{
+    ViewData["Title"] = "CFlix";
+    ViewData["de-container"] = true;
+}
+
+@model IEnumerable<CFlix.Models.Media>
+
+<div class="ui stackable internally celled grid">
+    <div class="row">
+        <div class="twelve wide column padded">
+            <div class="ui fluid vertical menu">
+                <form asp-route="Get_Search" method="get" class="item">
+                    <div class="ui action input">
+                        <input type="search" name="query" value="@ViewBag.Query" placeholder="Rechercher une série ou un film...">
+                        <button class="ui red icon button">
+                            <i class="search icon"></i>
+                        </button>
+                    </div>
+                    @if (ViewBag.DBError != null)
+                    {
+                        <div class="ui ignored error message">
+                            @ViewBag.DBError
+                        </div>
+                    }
+                </form>
+            </div>
+
+            <div class="ui four doubling centered cards">
+                @foreach (var media in Model)
+                {
+                    if (media.IsAvailable)
+                    {
+                        <a class="ui card" asp-area="" asp-controller="Media" asp-action="Detail" asp-route-mediaId="@media.Id">
+                            <div class="ui image">
+                                <img src="@media.ImageUri" alt="@media.Title" class="content" />
+                            </div>
+                        </a>
+                    }
+                    else
+                    {
+                        <div class="ui card">
+                            <div class="ui disabled image">
+                                <img src="@media.ImageUri" alt="@media.Title" class="content" />
+                            </div>
+                            <div class="extra content">
+                                <span class="right floated">
+                                    <span class="mediadate date" data-date="@DateTime.SpecifyKind(media.ReleaseDate, DateTimeKind.Utc).ToString("o")"></span>
+                                    <i class="calendar icon"></i>
+                                </span>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+
+        <div class="four wide column">
+            <vc:news-release></vc:news-release>
+        </div>
+    </div>
+</div>

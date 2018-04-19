@@ -1,0 +1,39 @@
+﻿@model EasterEggViewModel
+
+<div class="ui red card">
+
+    <div class="ui blurring dimmable image">
+        <a class="ui red right corner label">
+            <i class="check icon"></i>
+        </a>
+
+        <div class="ui dimmer">
+            <div class="content">
+                <div class="center">
+                    <div class="ui huge star rating" data-rating="@Model.UserEasterEgg.Rate" data-max-rating="5" data-easter-egg-id="@Model.EasterEgg.Id"></div>
+                    @if (@Model.UserEasterEgg.Rate != 0)
+                    {
+                        <br /><br /><span>Merci :)</span>
+                    }
+                </div>
+            </div>
+        </div>
+        @*<i class="right floated like icon"></i>*@
+        <img src="/images/easteregg/@(Model.EasterEgg.Hash).svg" alt="@Model.EasterEgg.Title" class="content" />
+    </div>
+
+    <div class="content disabled">
+        <div class="header">@Model.EasterEgg.Title</div>
+        <div class="description">
+            @Model.EasterEgg.Description
+        </div>
+    </div>
+
+    <div class="extra content">
+        <span class="eastereggdate right floated" data-easter-egg-date="@DateTime.SpecifyKind(Model.UserEasterEgg.CreationDate.DateTime, DateTimeKind.Utc).ToString("o")">
+        </span>
+        <span>
+            <i class="flag checkered icon"></i>
+        </span>
+    </div>
+</div>

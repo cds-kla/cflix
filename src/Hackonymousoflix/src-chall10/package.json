@@ -1,0 +1,14 @@
+{
+  "name": "the-white-house",
+  "version": "1.0.0",
+  "main": "vm.js",
+  "author": "Hackonymousoflix",
+  "scripts": {
+    "start": "node vm.js"
+  },
+  "dependencies": {
+    "md5": "^2.2.1",
+    "vorpal": "^1.12.0"
+  },
+  "devDependencies": {}
+}

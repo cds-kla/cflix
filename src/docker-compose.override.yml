@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  cflix:
+    environment:
+    - ASPNETCORE_ENVIRONMENT=Production
+
+  cflix.imageviewer:
+    environment:
+    - ASPNETCORE_ENVIRONMENT=Development

@@ -1,0 +1,136 @@
+version: '3'
+
+services:
+  reverse-proxy:
+    image: cflix/nginx
+    container_name: cflix_proxy
+    ports:
+    - "80:80"
+    - "443:443"
+    build:
+      context: ./Nginx
+      dockerfile: Dockerfile
+    restart: always
+    networks:
+    - cflix-main
+    - hackonymousoflix-main
+    # command: [nginx-debug, '-g', 'daemon off;']
+
+  cflix:
+    image: cflix/cflix
+    container_name: cflix_cflix
+    build:
+      context: ./CFlix
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+    - CFLIX__STAGE=3
+    - CFLIX__USELDAP=false
+    # - ConnectionStrings__LdapUrl=LDAP://domain:389/OU=YOUR_ORGANIZATION,OU=UTILISATEURS,DC=domain,DC=com
+    depends_on:
+    - postgres
+    - mysql
+    networks:
+    - cflix-main
+    - cflix-imgviewer
+    - cflix-mysql
+
+  postgres:
+    image: cflix/postgres
+    container_name: cflix_db_postgres
+    build:
+      context: ./Postgres
+      dockerfile: Dockerfile
+    # user: cflix-db-admin
+    restart: always
+    volumes:
+    - pgdata:/var/lib/postgresql/data
+    environment:
+    # - POSTGRES_USER=cflix-db-admin
+    - POSTGRES_PASSWORD=postgres_password
+    - POSTGRES_DB=cflix
+    networks:
+    - cflix-main
+
+  mysql:
+    image: cflix/mysql
+    container_name: cflix_db_mysql
+    build: 
+      context: ./MySQL
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+    - mysqldata:/var/lib/mysql
+    environment:
+    - MYSQL_ROOT_PASSWORD=mysql_password
+    networks:
+    - cflix-mysql
+    command: [--character-set-server=utf8mb4, --collation-server=utf8mb4_unicode_ci]
+
+  redis:
+    image: redis:alpine
+    container_name: cflix_redis
+    restart: always
+    networks:
+    - cflix-main
+
+  cflix.imageviewer:
+    image: cflix/cflix.imageviewer
+    container_name: cflix_imgviewer
+    restart: always
+    build:
+      context: ./CFlix.ImageViewer
+      dockerfile: Dockerfile
+    ports:
+    - "22222:22222"
+    networks:
+    - cflix-imgviewer
+
+  hackonymousoflix:
+    image: cflix/hackonymousoflix
+    container_name: hackonymousoflix_main
+    build:
+      context: ./Hackonymousoflix
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+    # - 1337:1337
+    - "845:845"
+    networks:
+    - hackonymousoflix-main
+
+  robotshop:
+    image: cflix/robotshop
+    container_name: hackonymousoflix_robotshop
+    build:
+      context: ./Hackonymousoflix.RobotShop/robotshop
+      dockerfile: Dockerfile
+    restart: always
+    ports: 
+    - 84:80
+    networks: 
+    - hackonymousoflix-robotshop
+
+  shoxxbot:
+    image: cflix/shoxxbot
+    container_name: hackonymousoflix_shoxxbot
+    build:
+      context: ./Hackonymousoflix.RobotShop/shoxx-bot
+      dockerfile: Dockerfile
+    restart: always
+    volumes: 
+    - /etc/localtime:/etc/localtime:ro
+    networks: 
+    - hackonymousoflix-robotshop
+
+
+volumes:
+  pgdata:
+  mysqldata:
+
+networks: 
+  cflix-main:
+  cflix-mysql:
+  cflix-imgviewer:
+  hackonymousoflix-main:
+  hackonymousoflix-robotshop:

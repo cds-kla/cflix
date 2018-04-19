@@ -1,0 +1,47 @@
+﻿@model ProfileViewModel
+
+@{
+    ViewData["Title"] = "Modification du profil";
+}
+
+<form asp-area="" asp-controller="Profile" asp-action="Edit" method="post" class="ui large form">
+    <div class="ui stacked segment">
+        <div class="field">
+            <label asp-for="DisplayName"></label>
+            <div class="ui left icon input">
+                <i class="user icon"></i>
+                <input asp-for="DisplayName">
+            </div>
+            <div asp-validation-for="DisplayName" class="ui error message"></div>
+        </div>
+
+        <div class="field">
+            <label asp-for="AvatarType"></label>
+            <div class="ui fluid selection dropdown">
+                <input asp-for="AvatarType" type="hidden">
+                <i class="dropdown icon"></i>
+                <div class="default text">Choisissez un avatar</div>
+                <div class="menu">
+                    @foreach (var avatarType in Html.GetEnumSelectList<AvatarType>())
+                    {
+                        <div class="item" data-value="@(Enum.Parse(typeof(AvatarType), avatarType.Value).ToString())">
+                            <img class="ui mini avatar image" src="/images/avatar/@(Enum.Parse(typeof(AvatarType), avatarType.Value).ToString()).svg">
+                            @avatarType.Text
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div asp-validation-for="AvatarType" class="ui error message"></div>
+        </div>
+        
+        @*<div class="field">
+            <label asp-for="AvatarType"></label>
+            <input asp-for="AccountType" disabled="disabled" />
+        </div>*@
+
+        <button type="submit" class="ui fluid large red submit button">Mettre à jour les informations du profil</button>
+    </div>
+
+    <div asp-validation-summary="All" class="ui error message"></div>
+</form>

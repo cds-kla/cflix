@@ -1,0 +1,22 @@
+﻿@model EasterEgg
+
+<div class="ui card">
+    <div class="ui image">
+
+        @if (!Model.IsAvailable)
+        {
+            <div class="ui red right ribbon label">
+                @*<i class="hotel icon"></i>*@Coming soon
+            </div>
+        }
+
+        <img src="/images/easteregg/@(Model.Hash).svg" alt="@Model.Title" class="content @(Model.IsAvailable? "" : "disabled")" />
+    </div>
+
+    <div class="content @(Model.IsAvailable? "" : "disabled")">
+        <div class="header">@Model.Title</div>
+        <div class="description">
+            @Model.Description
+        </div>
+    </div>
+</div>

@@ -1,0 +1,248 @@
+﻿@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Identity
+@inject IOptions<CFlixConfiguration> Configuration
+@inject UserManager<CFlixUser> UserManager
+@inject SignInManager<CFlixUser> SignInManager
+
+@{ var user = SignInManager.IsSignedIn(User) ? await UserManager.GetUserAsync(User) : null; }
+
+@{
+    ViewData["Title"] = "Réglement";
+}
+
+@if (user != null && !user.HaveReadRules)
+{
+    <div class="ui red message">
+        <p>Vous devez confirmer la lecture de ce règlement avant de pouvoir accèder au contenu de CFlix</p>
+    </div>
+}
+
+<div id="rules" class="ui raised segments container">
+    <div class="ui very padded segment">
+        <img src="~/images/logo/logo-light.svg" alt="CFlix" class="ui centered medium image" />
+    </div>
+
+    <div class="ui centered padded header">
+        <h1 class="ui header">Règlement du challenge</h1>
+    </div>
+
+    <div class="ui padded segment">
+        <p>Bienvenue sur CFlix, le site de streaming qui va révolutionner votre manière de regarder vos séries !</p>
+        <p>En vous connectant sur le site, vous accéderez à l’ensemble de notre catalogue et vous découvrirez les dernières saisons de vos séries préférées en avant-première.</p>
+        <p>Cependant il semblerait qu’un petit malin (ou plutôt canard) ai trouvé 2-3 failles présente sur le site...</p>
+        <p>En attendant que l’on comprenne comment il s’y prend, faites attention aux actions que vous faites.</p>
+
+        <div class="ui red message">
+            <p>Vous l'aurez compris, derrière le staff CFlix se cache en fait l'équipe sécurité SI de CFlix</p>
+            <p>Il s'agit donc du challenge sécurité 2017, cette année pas de robot mais des séries et des failles à exploiter, amusez-vous bien !</p>
+        </div>
+    </div>
+
+    <div class="ui padded segment">
+        <h2 class="ui header">Votre mission : les Easter Eggs</h2>
+        <p>Le but du challenge de cette année est de trouver l’ensemble des <b>Easter Eggs</b> disséminés au travers du site. En effet, que ce soit les administrateurs de CFlix ou le hacker <b>Hackonymousoflix</b> (Vilain Petit Canard) ils en ont tous cachés un peu partout sur le site web CFlix. Vous devez donc tous les retrouver !</p>
+
+        <p>Ceux-ci sont répartis en deux catégories distincte : les <b>principaux</b> et les <b>bonus</b>.</p>
+
+        <h3 class="ui header">Les principaux</h3>
+        <img src="~/images/logo/easter-eggs.svg" alt="Easter Egg" class="ui small left floated image" />
+        <p>Les Easter Eggs principaux correspondent à la trame principale du challenge. Ils ont été répartis au travers des différentes séries disponibles sur CFlix. Ainsi, derrière chacune d’entre elles se cache une nouvelle épreuve et donc un Easter Egg inédit. Pour vous aider et vous guider, Hackonymousoflix s’amuse à vous donner des indices dans les commentaires de chacune d’entre elles. Donc si vous ne savez pas quoi faire, regardez l’épisode d’une série, puis lisez les commentaires !</p>
+        <p>Attention cependant certaines des épreuves poursuivent dans la continuité de la précédente, elles sont chaînées.</p>
+
+        <h3 class="ui header">Les bonus</h3>
+        <img src="~/images/logo/easter-egg2.svg" alt="Easter Egg" class="ui small right floated image" />
+        <p>Les Easter Eggs bonus comme leur nom l’indiquent ne sont pas directement liés à la trame principale du challenge mais viennent la compléter. En effet, à l’origine les développeurs du site, grand fan de jeux vidéo, voulaient cacher des Easter Eggs dans leur code. Et une fois lancé dans leur élan, pris d’une frénésie sans pareille ils en ont disséminés partout. Que ce soit dans les images, dans les vidéos ou encore au cœur des pages HTML tout est source à dissimuler des informations !</p>
+        <p>Votre seul recours sera d’ouvrir l’œil et d’être attentif à tout ce qui vous semble suspect. Et si vous êtes suffisamment perspicace l’intitulé et la description des Easter Eggs Bonus devrait vous être utile.</p>
+        <p><b>NB : </b>Trouver un Easter Egg Bonus vous donne le droit à un indice conséquent pour trouver un des Easter Eggs principaux. Pour profiter de votre bonus, il vous faudra contacter le staff par le biais du chat qui vous donnera ainsi un indice sur l'épreuve que vous voulez ! Attention cependant, ils sont à usage unique <b>1 bonus = 1 indice</b> donc choississez bien pour quelle épreuve vous désirez un coup de pouce.</p>
+    </div>
+
+    <div class="ui padded segment">
+        <h2 class="ui header">Déroulement de l’évènement</h2>
+        <p>Le challenge se déroule du 29 mai au 23 juin 2017 et il sera séquencé en 3 phases. Durant chacune d’elles vous aurez 4 épreuves à résoudre, et ceux qui seront les plus rapides à les finir obtiendront des lots.</p>
+        @*<p>A l'issue du challenge, une restitution est prévu pour annoncer les gagnants de chacune des phases</p>*@
+        @*<p>Le déclenchement de chacune des phases est déterminé par vos actions et votre collaboration avec vos collègues. Si plus de 50% des participants arrivent à résoudre les épreuves principales, les suivantes seront débloquées autrement vous devrez attendre que la deadline arrive. N’hésitez donc pas à vous challenger entre vous et à vous aider !</p>*@
+
+        <div class="ui three steps">
+            <div class="@(Configuration.Value.Stage < 2? "active" : "")  step">
+                <i class="hourglass start icon"></i>
+                <div class="content">
+                    <div class="title">Phase #1</div>
+                    <div class="description">4 Easter Eggs à trouver avant le 4 juin</div>
+                </div>
+            </div>
+            <div class="@(Configuration.Value.Stage == 2? "active" : "") step">
+                <i class="hourglass half icon"></i>
+                <div class="content">
+                    <div class="title">Phase #2</div>
+                    <div class="description">4 Easter Eggs à trouver avant le 11 juin</div>
+                </div>
+            </div>
+            <div class="@(Configuration.Value.Stage > 3? "active" : "") step">
+                <i class="hourglass end icon"></i>
+                <div class="content">
+                    <div class="title">Phase #3</div>
+                    <div class="description">Tous les Easter Eggs trouvés @*+ Bonus*@</div>
+                    <div class="extra">Deadline le 23 juin</div>
+                </div>
+            </div>
+        </div>
+
+
+        @*<div class="ui padded segment">*@
+        <h3 class="ui header">Restitution</h3>
+        <p>A la fin de ces 4 semaines <b><u>une restitution est prévue au Nautilus le 28 juin 2017</u></b>, si vous souhaitez y participer prévoyez de réserver un créneau sur la journée (l'horaire sera spécifié plus tard).</p>
+        <p>Nous en profiterons pour faire la cérémonie de remise des lots. Ce sera également l'occasion pour nous de vous sensibiliser aux dangers d’Internet en vous expliquant les solutions de l'ensemble des épreuves. Nous décortiquerons donc les failles exploitées et les moyens mis en oeuvre par notre cher <b>Vilain petit canard - Hackononymousoflix</b> pour prendre le contrôle du site.</p>
+        <p>NB : la majorité des épreuves sont réalisées en asp .net core, cela devrait suffire pour vous convaincre d'assister au débriefing !</p>
+        @*</div>*@
+        @*</div>
+
+            <div class="ui padded segment">*@
+        <h3 class="ui header">Les récompenses</h3>
+        <p>Toutes les personnes participant au challenge auront le privilège d’accéder aux dernières saisons des séries à la mode ! 😉</p>
+
+        <p>@*Et pour ceux qui relèveront les différentes épreuves, des lots sont à gagner. <u><b>Les détails à ce sujet arriveront bientôt.</b></u>*@</p>
+
+        <p>Et pour ceux qui relèveront les différentes épreuves, voici ce que vous pourrez gagner</p>
+
+        <div class="ui animated list">
+            <div class="item">
+                <i class="large flag checkered icon"></i>
+                <div class="content">
+                    <div class="header">Phase #1</div>
+                    <div class="description">Trouver les 4 premiers Easter Eggs</div>
+                    <div class="list">
+                        <div class="item">
+                            <i class="large trophy icon"></i>
+                            <div class="content">
+                                <div class="header">3ème place</div>
+                                <div class="description">-> un code cadeau CFlix de 20€</div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <i class="large trophy icon"></i>
+                            <div class="content">
+                                <div class="header">2ème place</div>
+                                <div class="description">-> un code cadeau CFlix de 50€</div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <i class="large trophy icon"></i>
+                            <div class="content">
+                                <div class="header">1ère place</div>
+                                <div class="description">-> un code cadeau CFlix de 75€</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="item">
+                <i class="large flag checkered icon"></i>
+                <div class="content">
+                    <div class="header">Phase #2</div>
+                    <div class="description">Trouver les 4 Easter Eggs de la deuxième semaine (difficulté ++ )</div>
+                    <div class="list">
+                        <div class="item">
+                            <i class="large trophy icon"></i>
+                            <div class="content">
+                                <div class="header">3ème place</div>
+                                <div class="description">-> un code cadeau CFlix de 50€</div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <i class="large trophy icon"></i>
+                            <div class="content">
+                                <div class="header">2ème place</div>
+                                <div class="description">-> un code cadeau CFlix de 75€</div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <i class="large trophy icon"></i>
+                            <div class="content">
+                                <div class="header">1ère place</div>
+                                <div class="description">-> un code cadeau CFlix de 100€</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="item">
+                <i class="large flag checkered icon"></i>
+                <div class="content">
+                    <div class="header">Phase #3</div>
+                    <div class="description">Trouver tous les Easter Eggs principaux (difficulté # )</div>
+                    <div class="list">
+                        <div class="item">
+                            <i class="large trophy icon"></i>
+                            <div class="content">
+                                <div class="header">3ème place</div>
+                                <div class="description">-> un code cadeau CFlix de 75€</div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <i class="large trophy icon"></i>
+                            <div class="content">
+                                <div class="header">2ème place</div>
+                                <div class="description">-> un code cadeau CFlix de 100€</div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <i class="large trophy icon"></i>
+                            <div class="content">
+                                <div class="header">1ère place</div>
+                                <div class="description">-> un code cadeau CFlix de 150€ + participation à un concours de hacking CTF avec l’équipe sécurité IT</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="ui padded segment">
+        <h2 class="ui header">Informations complémentaires</h2>
+
+        <h3 class="ui header">L'authentification</h3>
+        <p><b>L’authentification</b> sur CFlix passe par l’Active Directory de CFlix, de ce fait pour vous connecter vous devez utiliser votre compte CDBDX.</p>
+        <p>NB : mis à part pour vérifier votre identité auprès de l’AD, CFlix reste complètement dissocié de votre compte CDBDX, aucune information sensible en dehors de votre identifiant (prenom.nom) n’est sauvegardée sur le serveur cflix.</p>
+        <p>NB 2 : cela inclut également votre mot de passe pour vous connecter, celui-ci n’est pas sauvegardé.</p>
+        <p><b>L’authentification sur le site CFlix ne fait pas l’objet d’une épreuve</b>, il est donc interdit de rechercher des failles (par bruteforce ou d’une autre manière)</p>
+
+        <br />
+        <p>De même, les épreuves ont été conçues pour être résolues avec l’ensemble des outils qui sont à votre disposition sur votre poste local. <u><b>Il est donc déconseillé de chercher à installer des outils annexes.</b></u></p>
+
+        <h3 class="ui header">Informations et communication</h3>
+        <p>Le <b>hub d'information</b> présent sur l'accueil est là pour vous tenir au courant des dernières nouveautés qui surviendront sur le site. Il pourra également contenir des astuces</p>
+
+        <p>Si vous pensez avoir trouvé un problème anormal sur le déroulement du challenge, à tout moment (durant les heures de travail) vous pouvez contacter l’équipe sécurité SI par le biais du chat mis en place pour l’occasion. Celui-ci est disponible en bas à droite de votre écran.</p>
+        <p>NB : lui non plus ne fait pas lieu d’une épreuve, merci donc de ne pas tenter de le hacker.</p>
+
+        <h3 class="ui header">Cookie</h3>
+        <p>Afin d'améliorer votre expérience sur le site et pour vous préparer un challenge encore meilleur l'année prochaine, CFlix utilise des cookies pour vous tracer, et utilise notamment Google Analytics pour cela. En continuant votre navigation sur le site vous acceptez cela.</p>
+    </div>
+
+    @if (user != null && !user.HaveReadRules)
+    {
+        <div class="ui very padded segment">
+            <form asp-action="AcceptRules" asp-controller="Rules" asp-area="" method="post" class="ui inverted large form">
+                <div class="field">
+                    <div class="ui checkbox">
+                        <input name="accept" value="true" type="checkbox" />
+                        <label>En cochant la case, vous acceptez nos conditions d'utilisation et indiquez que vous avez lu notre règlement pour le challenge de sécurité 2017.</label>
+                    </div>
+                </div>
+
+                <div asp-validation-summary="All" class="ui error message"></div>
+
+                <button type="submit" class="ui fluid large red submit button">Confirmer la lecture du règlement</button>
+            </form>
+
+        </div>
+    }
+
+    <div class="ui very padded segment">
+        <img src="~/images/logo/slogan-white.svg" alt="CFlix" class="ui centered medium image" />
+    </div>
+</div>

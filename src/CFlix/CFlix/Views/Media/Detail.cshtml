@@ -1,0 +1,31 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model CFlix.Models.Media
+@inject UserManager<CFlixUser> UserManager
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="row">
+    <div class="row">
+        <h1 class="ui header">@Model.Title</h1>
+        <div class="ui embed" data-placeholder="/images/video-cover/@(Model.Id == 9? "9.png" : Model.Id + ".jpg")" data-id="@Model.YouTubeId" data-source="youtube">
+        </div>
+        @*<div class="videoWrapper">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/@Model.YouTubeId" frameborder="0" allowfullscreen></iframe>
+        </div>*@
+
+        @*<img src="@Model.ImageUri" alt="@Model.Title" width="200" />*@
+    </div>
+
+    @if ((await UserManager.GetUserAsync(User)).AccountType == AccountType.Alpha)
+    {
+        <div class="ui segment">
+            <a asp-area="" asp-controller="Viewer" asp-action="Index" asp-route-mediaId="@Model.Id" class="ui fluid orange labeled submit icon button">
+                <i class="icon edit"></i>Alpha : accèder à la galerie
+            </a>
+        </div>
+    }
+
+    <vc:review media-id="@Model.Id"></vc:review>
+</div>

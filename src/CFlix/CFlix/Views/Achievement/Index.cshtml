@@ -1,0 +1,61 @@
+﻿@model Dictionary<EasterEgg, CFlixUserEasterEgg>
+
+@{
+    ViewData["Title"] = "Easter Eggs";
+}
+
+<div class="ui segment inverted">
+    <div class="ui header centered">
+        Nous avons caché des easters eggs un peu partout sur le site, amusez-vous à tous les trouver ! :)<br />
+        Dès que vous en aurez trouvé un saisissez-le ici pour le valider :
+    </div>
+    <div class="ui fluid vertical menu inverted">
+        <form asp-area="" asp-controller="Achievement" asp-action="Check" method="post" class="item">
+            <div class="ui right labeled action input">
+                <span class="ui label">
+                    Saississez votre easter egg
+                </span>
+                <input type="text" name="easteregg" placeholder="e.g. : CFl1X-17_5_v3rY_s1mp13">
+                <button class="ui red icon button">
+                    <i class="right arrow icon"></i>
+                </button>
+            </div>
+            @if (ViewBag.DBError != null)
+            {
+                <div class="ui ignored error message">
+                    @ViewBag.DBError
+                </div>
+            }
+        </form>
+    </div>
+</div>
+
+@{ var groups = Model.GroupBy(x => x.Key.EasterEggType); }
+
+<div class="ui basic segment">
+    <h1 class="ui horizontal divider blue header">
+        <i class="trophy icon"></i>
+        Easter Egg principaux
+    </h1>
+    <div class="ui basic segment">
+        <div class="ui special six doubling centered cards">
+            @foreach (var pair in groups.FirstOrDefault(x => x.Key == EasterEggType.Challenge).OrderBy(x => x.Key.Id))
+            {
+                <vc:easter-egg easter-egg="@pair.Key" user-easter-egg="@pair.Value"></vc:easter-egg>
+            }
+        </div>
+    </div>
+
+    <h1 class="ui horizontal divider blue header">
+        <i class="diamond icon"></i>
+        Easter Egg Bonus
+    </h1>
+    <div class="ui basic segment">
+        <div class="ui special six doubling centered cards">
+            @foreach (var pair in groups.FirstOrDefault(x => x.Key == EasterEggType.Bonus).OrderBy(x => x.Key.Id))
+            {
+                <vc:easter-egg easter-egg="@pair.Key" user-easter-egg="@pair.Value"></vc:easter-egg>
+            }
+        </div>
+    </div>
+</div>

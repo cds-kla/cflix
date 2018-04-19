@@ -1,0 +1,65 @@
+﻿@using Microsoft.Extensions.Options
+@model CFlixLoginViewModel
+@inject Microsoft.AspNetCore.Identity.SignInManager<CFlixUser> SignInManager
+@inject IOptions<CFlixConfiguration> Configuration
+
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<link rel="stylesheet" href="~/css/account.css" />
+
+<div class="column">
+    <img src="~/images/logo/logo-white.svg" class="ui  centered image">
+    <div class="ui raised segment">
+
+
+        @*<span class="ui orange header">C</span>
+            <span class="ui blue header">Flix</span>*@
+        @*<span class="bottom aligned content">
+                - Utilisez votre compte CFlix pour vous connecter
+            </span>*@
+
+        <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post"
+              class="ui large form">
+            <div class="field">
+                <img src="~/images/logo/slogan.svg" alt="Vous êtes plus addict que vous ne le croyez" />
+            </div>
+
+            <div class="field">
+                <div class="ui left icon input">
+                    <i class="user icon"></i>
+                    <input asp-for="Login">
+                </div>
+                <span asp-validation-for="Login" class="ui basic red pointing prompt label hidden"></span>
+            </div>
+            <div class="field">
+                <div class="ui left icon input">
+                    <i class="lock icon"></i>
+                    <input asp-for="Password">
+                </div>
+                <span asp-validation-for="Password" class="ui basic red pointing prompt label hidden"></span>
+            </div>
+
+            @*<div asp-validation-summary="All" class="ui error message"></div>*@
+
+            <div class="ui fluid large vertical labeled icon buttons">
+                <button type="submit" class="ui red submit button">
+                    <i class="sign in icon"></i>Log in
+                </button>
+
+
+                @if (!Configuration.Value.UseLdap)
+                {
+                    <a class="ui fluid large left icon button" asp-action="Register" asp-controller="Account">
+                        <i class="signup icon"></i>Create an account
+                    </a>
+                }
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

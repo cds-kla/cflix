@@ -1,0 +1,18 @@
+{
+  "name": "asp.net",
+  "private": true,
+  "dependencies": {
+    "jquery": "3.2.1",
+    "jquery-validation": "1.16.0",
+    "jquery-validation-unobtrusive": "3.2.6",
+    "semantic": "2.2.10",
+    "moment": "2.18.1",
+    "smooch": "3.14.4"
+  },
+  "resolutions": {
+    "jquery": "3.2.1",
+    "jquery-validation": "1.16.0",
+    "semantic": "2.2.10",
+    "smooch": "3.14.4"
+  }
+}

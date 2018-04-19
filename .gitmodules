@@ -1,0 +1,3 @@
+[submodule "src/Hackonymousoflix/src/peda"]
+	path = src/Hackonymousoflix/src/peda
+	url = git://github.com/longld/peda.git

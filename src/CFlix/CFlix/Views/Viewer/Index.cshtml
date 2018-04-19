@@ -1,0 +1,26 @@
+﻿@model ViewerViewModel
+
+@{
+    ViewData["Title"] = "Visionneuse d'image";
+}
+
+<div class="ui grid">
+    <div class="twelve wide column">
+        <div class="ui image">
+            <img class="ui huge bordered image" src="@Url.Action("View", "Viewer", new { mediaId = Model.MediaId, imageName = Model.CurrentImage })" />
+        </div>
+    </div>
+
+    <div class="four wide column">
+        <div class="ui centered three doubling cards">
+            @foreach (var file in Model.Images)
+            {
+                <div class="card">
+                    <a asp-area="" asp-controller="Viewer" asp-action="Index" asp-route-mediaId="@Model.MediaId" asp-route-imageName="@file" class="image">
+                        <img class="image" src="@Url.Action("View", "Viewer", new { mediaId = Model.MediaId, imageName = file })" />
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,238 @@
+﻿.hidden.menu {
+    display: none;
+}
+
+.masthead.segment {
+    min-height: 700px;
+    padding: 1em 0em;
+}
+
+.masthead .logo.item img {
+    margin-right: 1em;
+}
+
+.masthead .ui.menu .ui.button {
+    margin-left: 0.5em;
+}
+
+.masthead h1.ui.header {
+    margin-top: 3em;
+    margin-bottom: 0em;
+    font-size: 4em;
+    font-weight: normal;
+}
+
+.masthead h2 {
+    font-size: 1.7em;
+    font-weight: normal;
+}
+
+.ui.vertical.stripe {
+    padding: 8em 0em;
+}
+
+    .ui.vertical.stripe h3 {
+        font-size: 2em;
+    }
+
+    .ui.vertical.stripe .button + h3,
+    .ui.vertical.stripe p + h3 {
+        margin-top: 3em;
+    }
+
+    .ui.vertical.stripe .floated.image {
+        clear: both;
+    }
+
+    .ui.vertical.stripe p {
+        font-size: 1.33em;
+    }
+
+    .ui.vertical.stripe .horizontal.divider {
+        margin: 3em 0em;
+    }
+
+.quote.stripe.segment {
+    padding: 0em;
+}
+
+    .quote.stripe.segment .grid .column {
+        padding-top: 5em;
+        padding-bottom: 5em;
+    }
+
+.footer.segment {
+    padding: 5em 0em;
+}
+
+.secondary.pointing.menu .toc.item {
+    display: none;
+}
+
+@media only screen and (max-width: 700px) {
+
+    .secondary.pointing.menu .item,
+    .secondary.pointing.menu .menu {
+        display: none;
+    }
+
+    .secondary.pointing.menu .toc.item {
+        display: block;
+    }
+
+    .masthead.segment {
+        min-height: 350px;
+    }
+
+    .masthead h1.ui.header {
+        font-size: 2em;
+        margin-top: 1.5em;
+    }
+
+    .masthead h2 {
+        margin-top: 0.5em;
+        font-size: 1.5em;
+    }
+}
+
+body.pushable {
+    background: #1F3244 !important;
+}
+
+.ui.inverted.segment,
+.ui.inverted.menu {
+    background: #1F3244;
+}
+
+.ui.red.button {
+    background: #D73C35;
+    color: white;
+}
+    /*#CB473C*/
+    .ui.red.button:hover,
+    .ui.red.button:active,
+    .ui.red.button:focus {
+        background-color: #E24B44;
+        color: white;
+    }
+
+.ui.red.label {
+    background-color: #E24B44 !important;
+    border-color: #E24B44 !important;
+}
+
+.ui.red.header {
+    color: #E24B44 !important;
+}
+
+.ui.blue.header {
+    color: #1F3244 !important;
+}
+
+ui.red.card {
+    box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 2px 0px 0px #E24B44, 0px 1px 3px 0px #D4D4D5;
+}
+
+.ui.star.rating .active.icon {
+    color: #D73C35 !important;
+    text-shadow: none !important;
+}
+
+.ui.star.rating .icon.selected,
+.ui.star.rating .icon.selected.active {
+    color: #E24B44 !important;
+    text-shadow: 0px -1px 0px #E24B44, -1px 0px 0px #E24B44, 0px 1px 0px #E24B44, 1px 0px 0px #E24B44 !important;
+}
+
+.ui.search {
+    margin-bottom: 10px;
+}
+
+#reviewSection {
+    padding-top: 19px;
+}
+
+.videoWrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    padding-top: 25px;
+    height: 0;
+}
+
+    .videoWrapper iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+.ui.message > .closelike.icon {
+    position: absolute;
+    margin: 0em;
+    top: 0.78575em;
+    right: 0.5em;
+    opacity: 0.7;
+    -webkit-transition: opacity 0.1s ease;
+    transition: opacity 0.1s ease;
+}
+
+.ui.star.rating .icon {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.content.disabled {
+    opacity: 0.45;
+}
+
+/* Rules page */
+#rules.ui.container {
+    width: 800px !important;
+    background: #1F3244;
+}
+
+@media only screen and (max-width: 800px) {
+    #rules.ui.container {
+        width: auto !important;
+    }
+}
+
+#rules .segment {
+    background: #1F3244;
+}
+
+#rules h1,
+#rules h2,
+#rules h3,
+#rules .ui.list > .item .icon {
+    color: #E24B44;
+}
+
+#rules p {
+    color: white;
+}
+
+#rules .ui.list > .item .header,
+#rules .ui.list > .item .description {
+    color: white;
+}
+
+#rules .ui.list > .item {
+    padding-top: 0.7em;
+    padding-bottom: 0.7em;
+}
+
+#rules .ui.list .list > .item {
+    padding-top: 0.35em;
+    padding-bottom: 0.35em;
+}
+
+#rules .ui.red.message {
+    background-color: rgba(226, 75, 68, 0.86);
+}
+
+#error h2,
+#error .ui.statistic > .label,
+#error .ui.statistic > .value {
+    color: #E24B44;
+}

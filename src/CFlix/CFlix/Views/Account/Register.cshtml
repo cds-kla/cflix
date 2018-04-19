@@ -1,0 +1,62 @@
+﻿@model RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<link rel="stylesheet" href="~/css/account.css" />
+
+<div class="column">
+    <img src="~/images/logo/logo-white.svg" class="ui  centered image">
+    <div class="ui raised segment">
+
+        <form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post"
+              class="ui large form">
+            <div class="field">
+                <img src="~/images/logo/slogan.svg" alt="Vous êtes plus addict que vous ne le croyez" />
+            </div>
+
+            <h4>Create a new account.</h4>
+            <div class="field">
+                <div class="ui left icon input">
+                    <i class="user icon"></i>
+                    <input asp-for="UserName" placeholder="@Html.DisplayNameFor(m => m.UserName)">
+                </div>
+                <span asp-validation-for="UserName" class="ui basic red pointing prompt label hidden"></span>
+            </div>
+            <div class="field">
+                <div class="ui left icon input">
+                    <i class="mail icon"></i>
+                    <input asp-for="Email" placeholder="@Html.DisplayNameFor(m => m.Email)">
+                </div>
+                <span asp-validation-for="Email" class="ui basic red pointing prompt label hidden"></span>
+            </div>
+            <div class="field">
+                <div class="ui left icon input">
+                    <i class="lock icon"></i>
+                    <input asp-for="Password" placeholder="@Html.DisplayNameFor(m => m.Password)">
+                </div>
+                <span asp-validation-for="Password" class="ui basic red pointing prompt label hidden"></span>
+            </div>
+            <div class="field">
+                <div class="ui left icon input">
+                    <i class="lock icon"></i>
+                    <input asp-for="ConfirmPassword" placeholder="@Html.DisplayNameFor(m => m.ConfirmPassword)">
+                </div>
+                <span asp-validation-for="ConfirmPassword" class="ui basic red pointing prompt label hidden"></span>
+            </div>
+            <button type="submit" class="ui red fluid large submit button">
+                <i class="signup icon"></i>Create account
+            </button>
+
+            @if (!ViewContext.ModelState.IsValid)
+            {
+                <div asp-validation-summary="All" class="ui error message visible"></div>
+            }
+
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
